@@ -57,16 +57,17 @@ void Player::collisionResponse(GameObject& collider)
 	sf::FloatRect playerCollider = getCollisionBox();
 	sf::FloatRect wallBounds = collider.getCollisionBox();
 
-	auto overlap = playerCollider.findIntersection(wallBounds);
-	if (!overlap) return;
+	float previousPlayerBottom = (m_previousPosition.y + m_collisionBox.position.y + m_collisionBox.size.y);
+
+	float tileTop = wallBounds.position.y;
 	
 	// Floor collision
-	if (m_velocity.y > 0)
+	if (m_velocity.y > 0 && previousPlayerBottom <= tileTop )
 	{
 
 		m_isOnGround = true;
 		m_velocity.y = 0;
-		setPosition({ getPosition().x, collider.getPosition().y - getCollisionBox().size.y });
+		setPosition({ getPosition().x, tileTop - m_collisionBox.position.y - m_collisionBox.size.y });
 
 	}
 
