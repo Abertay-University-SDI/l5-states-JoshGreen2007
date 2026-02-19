@@ -8,8 +8,8 @@ Player::Player()
 
 
 	setTexture(&m_texture);
-	setSize({ 36,36 });
-	setCollisionBox({ {6,6}, { 24,25 } });
+	setSize({ 72,72 });
+	setCollisionBox({ {6,6}, { 48,50 } });
 	setPosition({ 50,0 });
 	m_isOnGround = false;
 	setTextureRect({ { 0,0 }, { 24,24 } });
@@ -23,7 +23,7 @@ void Player::handleInput(float dt)
 		m_acceleration.x -= SPEED;
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::D))
 		m_acceleration.x += SPEED;
-	if (m_input->isKeyDown(sf::Keyboard::Scancode::Space) && m_isOnGround)
+	if (m_input->isPressed(sf::Keyboard::Scancode::Space) && m_isOnGround)
 	{
 
 		m_velocity.y = -JUMP_FORCE;
@@ -41,9 +41,9 @@ void Player::handleInput(float dt)
 void Player::update(float dt)
 {
 
-	m_previousPosition = getPosition();
+	if (m_velocity.y > 0) m_isOnGround = false;
 
-	m_isOnGround = false;
+	m_previousPosition = getPosition();
 
 	// newtonian model
 	m_acceleration.y += GRAVITY;
@@ -57,17 +57,32 @@ void Player::collisionResponse(GameObject& collider)
 	sf::FloatRect playerCollider = getCollisionBox();
 	sf::FloatRect wallBounds = collider.getCollisionBox();
 
-	float previousPlayerBottom = (m_previousPosition.y + m_collisionBox.position.y + m_collisionBox.size.y);
-
 	float tileTop = wallBounds.position.y;
+
+	auto overlap = playerCollider.findIntersection(wallBounds);
+	if (!overlap) return;
 	
-	// Floor collision
-	if (m_velocity.y > 0 && previousPlayerBottom <= tileTop )
+	// Top/Bottom collision
+	if (overlap->size.x >= overlap->size.y)
 	{
 
-		m_isOnGround = true;
-		m_velocity.y = 0;
-		setPosition({ getPosition().x, tileTop - m_collisionBox.position.y - m_collisionBox.size.y });
+		if (m_previousPosition.y <= tileTop && m_velocity.y > 0)
+		{
+
+			m_velocity.y = 0;
+			// Set position to top of tile
+			setPosition({ getPosition().x, collider.getPosition().y - getCollisionBox().size.y });
+			m_isOnGround = true;
+
+		}
+
+	}
+
+	// Left / Right side collision
+	else
+	{
+
+		m_velocity.x *= -RESTITUTION; // Apply restitution
 
 	}
 

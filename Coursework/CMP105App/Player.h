@@ -17,6 +17,7 @@ private:
 
     const float GRAVITY = 10.f;
     const float SPEED = 10.f;
-    const float JUMP_FORCE = 5.f;
+    const float JUMP_FORCE = 6.f;
+    const float RESTITUTION = 0.8f;
 };
 
