@@ -16,7 +16,8 @@ private:
     bool m_isOnGround = false;
 
     const float GRAVITY = 10.f;
-    const float SPEED = 10.f;
+    float m_speed = 5.f;
+    const float MAX_SPEED = 10.f;
     const float JUMP_FORCE = 6.f;
     const float RESTITUTION = 0.8f;
 };

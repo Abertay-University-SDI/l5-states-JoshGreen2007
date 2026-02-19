@@ -20,9 +20,9 @@ void Player::handleInput(float dt)
 	m_acceleration = { 0,0 };
 
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::A))
-		m_acceleration.x -= SPEED;
+		m_acceleration.x -= m_speed;
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::D))
-		m_acceleration.x += SPEED;
+		m_acceleration.x += m_speed;
 	if (m_input->isPressed(sf::Keyboard::Scancode::Space) && m_isOnGround)
 	{
 
@@ -36,10 +36,15 @@ void Player::handleInput(float dt)
 		setPosition({ 50,0 });
 		m_velocity = { 0,0 };
 	}
+
+	if (m_speed >= MAX_SPEED)
+		m_speed = MAX_SPEED;
 }
 
 void Player::update(float dt)
 {
+
+	/*std::cout << "Hi\n";*/
 
 	if (m_velocity.y > 0) m_isOnGround = false;
 
@@ -57,16 +62,16 @@ void Player::collisionResponse(GameObject& collider)
 	sf::FloatRect playerCollider = getCollisionBox();
 	sf::FloatRect wallBounds = collider.getCollisionBox();
 
+	float oldBottom = m_previousPosition.y - wallBounds.size.y;
 	float tileTop = wallBounds.position.y;
 
 	auto overlap = playerCollider.findIntersection(wallBounds);
 	if (!overlap) return;
-	
-	// Top/Bottom collision
-	if (overlap->size.x >= overlap->size.y)
-	{
 
-		if (m_previousPosition.y <= tileTop && m_velocity.y > 0)
+	if (oldBottom <= tileTop)
+	{
+		
+		if (m_velocity.y > 0)
 		{
 
 			m_velocity.y = 0;
@@ -83,6 +88,11 @@ void Player::collisionResponse(GameObject& collider)
 	{
 
 		m_velocity.x *= -RESTITUTION; // Apply restitution
+
+		if (playerCollider.position.x < wallBounds.position.x)
+			setPosition({ getPosition().x - overlap->size.x , getPosition().y });
+		else
+			setPosition({ getPosition().x + overlap->size.x, getPosition().y });
 
 	}
 

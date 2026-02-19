@@ -73,7 +73,7 @@ void Level1::update(float dt)
 		{
 
 			m_player.collisionResponse(t);
-			std::cout << "Collision\n";
+			/*std::cout << "Collision\n";*/
 
 		}
 

@@ -73,7 +73,7 @@ void windowProcess(sf::RenderWindow& window, Input& in)
 int main()
 {
 	//Create the window
-	sf::RenderWindow window(sf::VideoMode({ 1000, 600 }), "cmp105: Lab 5");
+	sf::RenderWindow window(sf::VideoMode({ 1400, 800 }), "Dinosaur Game");
 	window.setVerticalSyncEnabled(true);
 
 	// Initialise input and manager objects.
