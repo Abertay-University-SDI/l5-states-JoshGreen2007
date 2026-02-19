@@ -6,6 +6,7 @@ Player::Player()
 	if (!m_texture.loadFromFile("gfx/dino1.png"))
 		std::cerr << "No dino texture. sad";
 
+
 	setTexture(&m_texture);
 	setSize({ 36,36 });
 	setCollisionBox({ {6,6}, { 24,25 } });
@@ -22,6 +23,13 @@ void Player::handleInput(float dt)
 		m_acceleration.x -= SPEED;
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::D))
 		m_acceleration.x += SPEED;
+	if (m_input->isKeyDown(sf::Keyboard::Scancode::Space) && m_isOnGround)
+	{
+
+		m_velocity.y = -JUMP_FORCE;
+		m_isOnGround = false;
+
+	}
 
 	if (m_input->isKeyDown(sf::Keyboard::Scancode::R))	// Reset (for debugging)
 	{
@@ -32,7 +40,10 @@ void Player::handleInput(float dt)
 
 void Player::update(float dt)
 {
-	std::cout << "hi\n";
+
+	m_previousPosition = getPosition();
+
+	m_isOnGround = false;
 
 	// newtonian model
 	m_acceleration.y += GRAVITY;
@@ -42,8 +53,21 @@ void Player::update(float dt)
 
 void Player::collisionResponse(GameObject& collider)
 {
+
+	sf::FloatRect playerCollider = getCollisionBox();
+	sf::FloatRect wallBounds = collider.getCollisionBox();
+
+	auto overlap = playerCollider.findIntersection(wallBounds);
+	if (!overlap) return;
 	
-	m_velocity.y = 0;
-	setPosition({ getPosition().x, collider.getPosition().y - getCollisionBox().size.y });
+	// Floor collision
+	if (m_velocity.y > 0)
+	{
+
+		m_isOnGround = true;
+		m_velocity.y = 0;
+		setPosition({ getPosition().x, collider.getPosition().y - getCollisionBox().size.y });
+
+	}
 
 }
