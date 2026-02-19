@@ -32,6 +32,7 @@ void Player::handleInput(float dt)
 
 void Player::update(float dt)
 {
+
 	// newtonian model
 	m_acceleration.y += GRAVITY;
 	m_velocity += dt * m_acceleration;
