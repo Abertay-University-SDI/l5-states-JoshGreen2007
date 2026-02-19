@@ -32,6 +32,7 @@ void Player::handleInput(float dt)
 
 void Player::update(float dt)
 {
+	std::cout << "hi\n";
 
 	// newtonian model
 	m_acceleration.y += GRAVITY;
@@ -42,4 +43,7 @@ void Player::update(float dt)
 void Player::collisionResponse(GameObject& collider)
 {
 	
+	m_velocity.y = 0;
+	setPosition({ getPosition().x, collider.getPosition().y - getCollisionBox().size.y });
+
 }
