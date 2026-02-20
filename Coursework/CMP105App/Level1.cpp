@@ -106,8 +106,8 @@ void Level1::render()
 	beginDraw();
 
 	m_tileMap.render(m_window);
-	m_window.draw(m_player);
 	m_window.draw(m_switch);
 	m_window.draw(m_flag);
+	m_window.draw(m_player);
 	endDraw();
 }

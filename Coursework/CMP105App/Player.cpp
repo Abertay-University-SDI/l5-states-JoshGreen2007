@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "Switch.h"
+
 #include <iostream>
 
 Player::Player()
