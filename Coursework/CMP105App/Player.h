@@ -24,6 +24,7 @@ private:
     GameObject* m_pSwitch;
 
     bool m_isOnGround = false;
+    bool m_switchState = false;
 
     float m_speed = 5.f;
     const float GRAVITY = 10.f;
