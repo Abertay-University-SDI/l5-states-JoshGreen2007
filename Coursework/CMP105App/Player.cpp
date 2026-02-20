@@ -37,6 +37,19 @@ void Player::handleInput(float dt)
 		m_velocity = { 0,0 };
 	}
 
+	if (m_input->isPressed(sf::Keyboard::Scancode::F))
+	{
+		
+		// If flag position - player position < interact range (I.E if the Player is inside the range)
+		if ((m_pFlag->getPosition() - getPosition()).length() < INTERACT_RANGE)
+			std::cout << "Flag interaction\n"; // Print statement
+
+		// Note to self: .length() = the sqrt(x^2 + y^2). It converts a 2D vector into a single number
+		if ((m_pSwitch->getPosition() - getPosition()).length() < INTERACT_RANGE)
+			std::cout << "Switch interaction\n";
+
+	}
+
 	if (m_speed >= MAX_SPEED)
 		m_speed = MAX_SPEED;
 }
@@ -44,7 +57,7 @@ void Player::handleInput(float dt)
 void Player::update(float dt)
 {
 
-	std::cout << "Hi\n";
+	/*std::cout << "Hi\n";*/
 
 	if (m_velocity.y > 0) m_isOnGround = false;
 

@@ -17,7 +17,8 @@ public:
 
 private:
 
-	GameObject m_flag, m_switch;
+	GameObject m_flag;
+	GameObject m_switch;
 
 	sf::Texture m_tileTexture;
 
