@@ -44,7 +44,7 @@ void Player::handleInput(float dt)
 void Player::update(float dt)
 {
 
-	/*std::cout << "Hi\n";*/
+	std::cout << "Hi\n";
 
 	if (m_velocity.y > 0) m_isOnGround = false;
 
@@ -54,6 +54,7 @@ void Player::update(float dt)
 	m_acceleration.y += GRAVITY;
 	m_velocity += dt * m_acceleration;
 	move(m_velocity);
+
 }
 
 void Player::collisionResponse(GameObject& collider)
@@ -62,7 +63,7 @@ void Player::collisionResponse(GameObject& collider)
 	sf::FloatRect playerCollider = getCollisionBox();
 	sf::FloatRect wallBounds = collider.getCollisionBox();
 
-	float oldBottom = m_previousPosition.y - wallBounds.size.y;
+	float oldBottom = m_previousPosition.y + playerCollider.size.y;
 	float tileTop = wallBounds.position.y;
 
 	auto overlap = playerCollider.findIntersection(wallBounds);
@@ -76,7 +77,7 @@ void Player::collisionResponse(GameObject& collider)
 
 			m_velocity.y = 0;
 			// Set position to top of tile
-			setPosition({ getPosition().x, collider.getPosition().y - getCollisionBox().size.y });
+			setPosition({ getPosition().x, getPosition().y - overlap->size.y });
 			m_isOnGround = true;
 
 		}

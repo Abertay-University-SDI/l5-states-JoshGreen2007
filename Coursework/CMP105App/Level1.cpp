@@ -47,6 +47,16 @@ Level1::Level1(sf::RenderWindow& hwnd, Input& in, GameState& gs) :
 	m_tileMap.buildLevel();
 
 	m_player.setInput(&m_input);
+
+	m_flag.setTexture(&m_tileTexture);
+	m_flag.setTextureRect({ {11 * 19, 5 * 19} , { 18, 18 } });
+	m_flag.setPosition({ 90 * 9, 344 });
+	m_flag.setSize({ 36,36 });
+	m_switch.setTexture(&m_tileTexture);
+	m_switch.setTextureRect({ {6 * 19,3 * 19}, {18,18} });
+	m_switch.setPosition({ 90 * 4, 254 });
+	m_switch.setSize({ 36,36 });
+
 }
 
 // handle user input

@@ -16,9 +16,11 @@ public:
 	void render();
 
 private:
-	// Default functions for rendering to the screen.
 
-	// Default variables for level class.
+	GameObject m_flag, m_switch;
+
+	sf::Texture m_tileTexture;
+
 	TileMap m_tileMap;
 
 	Player m_player;
