@@ -90,8 +90,22 @@ int main()
 	sf::Clock clock;
 	float deltaTime = 0.f;
 
+	bool pause = false;
+
 	// Game Loop
-	while (window.isOpen())
+
+	/* TODO: 
+	* 
+	* If in pause state
+	*	Pause all events
+	*	Display pause text
+	* 
+	* Else 
+	*	if space is pressed
+	*		Unpause game
+	* 
+	* */
+	while (window.isOpen() && !pause)
 	{
 		//Process window events
 		windowProcess(window, input);
