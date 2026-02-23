@@ -1,5 +1,7 @@
 #pragma once
 #include "Framework/GameObject.h"
+#include "Switch.h"
+
 class Player :
     public GameObject
 {
@@ -11,17 +13,14 @@ public:
     void collisionResponse(GameObject& collider) override;
 
     void setFlag(GameObject* flag) { m_pFlag = flag; }
-    void getFlag();
-
-    void setSwitch(GameObject* pSwitch) { m_pSwitch = pSwitch; }
-    void getSwitch();
+    void setSwitch(Switch* pSwitch) { m_pSwitch = pSwitch; }
 
 private:
     sf::Texture m_texture;
     sf::Vector2f m_acceleration;
     sf::Vector2f m_previousPosition;
-    GameObject* m_pFlag;
-    GameObject* m_pSwitch;
+    GameObject* m_pFlag = nullptr;
+    Switch* m_pSwitch = nullptr;
 
     bool m_isOnGround = false;
     bool m_switchState = false;

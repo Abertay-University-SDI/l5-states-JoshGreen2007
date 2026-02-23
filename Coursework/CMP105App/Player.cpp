@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "Switch.h"
 
 #include <iostream>
 
@@ -48,7 +47,7 @@ void Player::handleInput(float dt)
 
 		// Note to self: .length() = the sqrt(x^2 + y^2). It converts a 2D vector into a single number
 		if ((m_pSwitch->getPosition() - getPosition()).length() < INTERACT_RANGE)
-			std::cout << "Switch interaction\n";
+			m_pSwitch->toggle(); // Call toggle from switch
 
 	}
 

@@ -3,8 +3,10 @@
 #include "Framework/BaseLevel.h"
 #include "Framework/GameObject.h"
 #include "Framework/TileMap.h"
-#include "Player.h"
 #include "Framework/Collision.h"
+
+#include "Player.h"
+#include "Switch.h"
 
 class Level1 : BaseLevel {
 public:
@@ -15,15 +17,17 @@ public:
 	void update(float dt);
 	void render();
 
-private:
+	void setFlag(GameObject* flag);
+	void setSwitch(Switch* pSwitch);
 
-	GameObject m_flag;
-	GameObject m_switch;
+private:
 
 	sf::Texture m_tileTexture;
 
 	TileMap m_tileMap;
 
 	Player m_player;
+	Switch m_switch;
+	GameObject m_flag;
 
 };
