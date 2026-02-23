@@ -22,6 +22,10 @@ public:
 
 private:
 
+	bool m_isPaused = false;
+	sf::Font m_pausedFont;
+	sf::Text m_pausedText;
+
 	sf::Texture m_tileTexture;
 
 	TileMap m_tileMap;

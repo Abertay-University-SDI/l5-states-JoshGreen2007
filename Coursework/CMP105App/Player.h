@@ -15,6 +15,9 @@ public:
     void setFlag(GameObject* flag) { m_pFlag = flag; }
     void setSwitch(Switch* pSwitch) { m_pSwitch = pSwitch; }
 
+    bool getWantGameOver() { return m_wantsToEndGame; };
+    void setWantGameOver(bool isOver) { m_wantsToEndGame = isOver; } // Setter for private function
+
 private:
     sf::Texture m_texture;
     sf::Vector2f m_acceleration;
@@ -24,6 +27,7 @@ private:
 
     bool m_isOnGround = false;
     bool m_switchState = false;
+    bool m_wantsToEndGame = false;
 
     float m_speed = 5.f;
     const float GRAVITY = 10.f;

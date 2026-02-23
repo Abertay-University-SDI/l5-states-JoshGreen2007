@@ -43,7 +43,8 @@ void Player::handleInput(float dt)
 		
 		// If flag position - player position < interact range (I.E if the Player is inside the range)
 		if ((m_pFlag->getPosition() - getPosition()).length() < INTERACT_RANGE)
-			std::cout << "Flag interaction\n"; // Print statement
+			m_wantsToEndGame = true;
+		else { m_wantsToEndGame = false; }
 
 		// Note to self: .length() = the sqrt(x^2 + y^2). It converts a 2D vector into a single number
 		if ((m_pSwitch->getPosition() - getPosition()).length() < INTERACT_RANGE)

@@ -21,5 +21,3 @@ private:
 	sf::IntRect m_onIntRect = { {6 * 19,3 * 19}, {18,18} };
 
 };
-
-// Note to self: make changes to Level.h so it can interact

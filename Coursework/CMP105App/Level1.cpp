@@ -2,8 +2,16 @@
 
 
 Level1::Level1(sf::RenderWindow& hwnd, Input& in, GameState& gs) :
-	BaseLevel(hwnd, in, gs)
+	BaseLevel(hwnd, in, gs), m_pausedText(m_pausedFont)
 {
+
+	if (!m_pausedFont.openFromFile("font/arial.ttf")) std::cerr << "no font";
+	m_pausedText.setFont(m_pausedFont);
+
+	m_pausedText.setString("Made by William Kavanagh");
+	m_pausedText.setCharacterSize(24);
+	m_pausedText.setPosition({ 200,0 });
+
 	int tile_size = 18;
 	int num_cols = 20;
 	int num_rows = 9;
@@ -93,6 +101,16 @@ void Level1::update(float dt)
 			/*std::cout << "Collision\n";*/
 
 		}
+
+	}
+
+	if (m_player.getWantGameOver())
+	{
+
+		m_gameState.setCurrentState(State::CREDITS);
+		m_player.setPosition({ 50 , 0 });
+		m_player.setWantGameOver(false);
+		m_player.setVelocity({ 0, 0 });
 
 	}
 

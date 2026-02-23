@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "Level1.h"
+#include "Credits.h"
 #include "Framework/GameState.h"
 
 #ifndef SFML_VERSION_MAJOR
@@ -79,9 +80,11 @@ int main()
 	// Initialise input and manager objects.
 	Input input;
 	GameState gameState;
+	gameState.setCurrentState(State::LEVEL);
 
 	// Create level objects that may reference manager objects
 	Level1 level1(window, input, gameState);
+	Credits credits(window, input, gameState); // Same Level objects for Credits
 
 	// Initialise objects for delta time
 	sf::Clock clock;
@@ -98,10 +101,26 @@ int main()
 		deltaTime = clock.restart().asSeconds();
 		if (deltaTime > 0.1f) deltaTime = 0.1f; // Clamp delta time to avoid large jumps
 
-		// Call standard game loop functions (input, update and render)
-		level1.handleInput(deltaTime);
-		level1.update(deltaTime);
-		level1.render();
+		if (gameState.getCurrentState() == State::LEVEL)
+		{
+
+			// Call standard game loop functions (input, update and render)
+			level1.handleInput(deltaTime);
+			level1.update(deltaTime);
+			level1.render();
+
+		}
+		else
+		{
+
+			// Call standard game loop functions (input, update and render)
+			credits.handleInput(deltaTime);
+			credits.render();
+
+			 //Update not needed
+
+		}
+
 
 		// Update input class, handle pressed keys
 		// Must be done last.
