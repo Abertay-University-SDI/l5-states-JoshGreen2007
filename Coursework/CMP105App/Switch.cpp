@@ -22,4 +22,6 @@ void Switch::toggle()
 	if (m_isOn) setTextureRect(m_onIntRect);
 	else setTextureRect(m_offIntRect);
 
+	// Weird error where m_offIntRect isn't recognised - fix this
+
 }
