@@ -5,13 +5,6 @@ Level1::Level1(sf::RenderWindow& hwnd, Input& in, GameState& gs) :
 	BaseLevel(hwnd, in, gs), m_pausedText(m_pausedFont)
 {
 
-	if (!m_pausedFont.openFromFile("font/arial.ttf")) std::cerr << "no font";
-	m_pausedText.setFont(m_pausedFont);
-
-	m_pausedText.setString("Made by William Kavanagh");
-	m_pausedText.setCharacterSize(24);
-	m_pausedText.setPosition({ 200,0 });
-
 	int tile_size = 18;
 	int num_cols = 20;
 	int num_rows = 9;
@@ -72,11 +65,32 @@ Level1::Level1(sf::RenderWindow& hwnd, Input& in, GameState& gs) :
 	m_player.setFlag(&m_flag);
 	m_player.setSwitch(&m_switch);
 
+	if (!m_pausedFont.openFromFile("font/arial.ttf")) std::cerr << "no font";
+	m_pausedText.setFont(m_pausedFont);
+
+	m_pausedText.setString("Paused");
+	m_pausedText.setCharacterSize(24);
+	m_pausedText.setPosition({ -100, -100 });
+
 }
 
 // handle user input
 void Level1::handleInput(float dt)
 {
+
+	if (m_input.isPressed(sf::Keyboard::Scancode::P))
+		m_isPaused = !m_isPaused; // Flip paused state
+
+	if (m_isPaused)
+	{
+
+		auto middle = m_window.getDefaultView().getCenter();
+		m_pausedText.setPosition(middle);
+
+	}
+
+	if (m_isPaused) return; // Exit function immediately if true
+
 	if (m_input.isLeftMousePressed())
 	{
 		std::cout << "left mouse pressed" << std::endl;
@@ -88,6 +102,8 @@ void Level1::handleInput(float dt)
 // Update game objects
 void Level1::update(float dt)
 {
+
+	if (m_isPaused) return;
 
 	std::vector<GameObject>& level = *m_tileMap.getLevel();
 
@@ -127,5 +143,8 @@ void Level1::render()
 	m_window.draw(m_switch);
 	m_window.draw(m_flag);
 	m_window.draw(m_player);
+
+	if (m_isPaused) m_window.draw(m_pausedText);
+
 	endDraw();
 }

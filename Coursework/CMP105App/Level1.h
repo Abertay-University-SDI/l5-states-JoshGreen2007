@@ -20,8 +20,6 @@ public:
 	void setFlag(GameObject* flag);
 	void setSwitch(Switch* pSwitch);
 
-	void pauseToggle() { m_isPaused = !m_isPaused; };
-
 private:
 
 	bool m_isPaused = false;
